@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/likeablePerson")
@@ -56,7 +55,8 @@ public class LikeablePersonController {
 
         // 인스타인증을 했는지 체크
         if (instaMember != null) {
-            List<LikeablePerson> likeablePeople = likeablePersonService.findByFromInstaMemberId(instaMember.getId());
+            // 해당 인스타회원이 좋아하는 사람들 목록
+            List<LikeablePerson> likeablePeople = instaMember.getFromLikeablePeople();
             model.addAttribute("likeablePeople", likeablePeople);
         }
 
@@ -70,9 +70,7 @@ public class LikeablePersonController {
 
         RsData canActorDeleteRsData = likeablePersonService.canActorDelete(rq.getMember(), likeablePerson);
 
-        if (canActorDeleteRsData.isFail()) {
-            return rq.historyBack(canActorDeleteRsData);
-        }
+        if (canActorDeleteRsData.isFail()) return rq.historyBack(canActorDeleteRsData);
 
         RsData deleteRs = likeablePersonService.delete(likeablePerson);
 

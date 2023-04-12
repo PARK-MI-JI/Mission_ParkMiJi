@@ -1,7 +1,5 @@
 package com.ll.gramgram.boundedContext.likeablePerson.controller;
 
-
-
 import com.ll.gramgram.boundedContext.likeablePerson.service.LikeablePersonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -175,12 +173,10 @@ public class LikeablePersonControllerTests {
         ;
 
         assertThat(likeablePersonService.findById(1L).isPresent()).isEqualTo(false);
-
-
     }
 
     @Test
-    @DisplayName("호감삭제(없는거 삭제, 삭제가 안돼야 함)")
+    @DisplayName("호감삭제(없는거 삭제, 삭제가 안되어야 함)")
     @WithUserDetails("user3")
     void t007() throws Exception {
         // WHEN
@@ -197,7 +193,6 @@ public class LikeablePersonControllerTests {
                 .andExpect(handler().methodName("delete"))
                 .andExpect(status().is4xxClientError())
         ;
-
     }
 
     @Test
@@ -220,8 +215,5 @@ public class LikeablePersonControllerTests {
         ;
 
         assertThat(likeablePersonService.findById(1L).isPresent()).isEqualTo(true);
-
-
     }
-
 }
